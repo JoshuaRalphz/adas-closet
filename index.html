@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ada's Closet — Consignment Made Easy | Spring Arbor, MI</title>
+  <meta name="description" content="Turn your unworn clothes into cash with Ada's Closet. Drop off at Spring Arbor University and earn ≥30% of every sale. Free to sign up — no upfront cost." />
+  <link rel="canonical" href="https://adascloset.thesauhub.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://adascloset.thesauhub.com/" />
+  <meta property="og:title" content="Ada's Closet — Consignment Made Easy | Spring Arbor, MI" />
+  <meta property="og:description" content="Turn your unworn clothes into cash. Drop off at SAU, we list on Depop, eBay & Poshmark — you earn ≥30%. Free to sign up." />
+  <meta property="og:site_name" content="Ada's Closet" />
+  <meta name="twitter:card" content="summary" />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232A4A3E'/%3E%3Ctext x='16' y='23' font-family='Georgia%2Cserif' font-size='21' font-style='italic' font-weight='bold' fill='%23C9A870' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232A4A3E'/%3E%3Ctext x='16' y='23' font-family='Georgia%2Cserif' font-size='21' font-style='italic' font-weight='bold' fill='%23C9A870' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E" />
+  <style>
+    :root {
+      --blue:#2A4A3E;--blue-dark:#1e3830;
+      --cream:#FAF3E8;--cream2:#F2E8D5;
+      --gold:#C9A870;--gold-dark:#a8864e;
+      --espresso:#2D2318;--white:#FFFFFF;
+      --muted:#6b5e50;--border:rgba(42,74,62,0.15);
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    html,body{overflow-x:hidden}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--espresso)}
+
+    /* KEYFRAMES */
+    @keyframes fadeUp   {from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+    @keyframes blobPulse{0%,100%{transform:scale(1) translate(0,0)}50%{transform:scale(1.08) translate(1.5%,1%)}}
+    @keyframes dotDrift {from{background-position:0 0}to{background-position:28px 28px}}
+    @keyframes sway     {0%,100%{transform:rotate(-1.5deg)}50%{transform:rotate(1.5deg)}}
+    @keyframes glowPulse{0%,100%{box-shadow:0 6px 24px rgba(201,168,112,.3)}50%{box-shadow:0 10px 40px rgba(201,168,112,.6)}}
+    @keyframes shine    {0%{background-position:-200% center}100%{background-position:200% center}}
+    @keyframes pageIn   {from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+    @keyframes successPop{from{opacity:0;transform:scale(.88) translateY(12px)}to{opacity:1;transform:none}}
+    @keyframes confetti {0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(-80px) rotate(360deg);opacity:0}}
+    @keyframes ripple   {to{transform:scale(1);opacity:0}}
+
+    /* ROUTER */
+    .page{display:none}
+    .page.active{display:block;animation:pageIn .45s cubic-bezier(.22,1,.36,1) both}
+
+    /* REVEAL */
+    [data-reveal]{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+    [data-reveal="left"]{transform:translateX(-28px)}
+    [data-reveal="scale"]{transform:scale(.9)}
+    [data-reveal].vis{opacity:1;transform:none}
+    [data-d="1"]{transition-delay:.07s}[data-d="2"]{transition-delay:.14s}[data-d="3"]{transition-delay:.21s}
+    [data-d="4"]{transition-delay:.28s}[data-d="5"]{transition-delay:.35s}[data-d="6"]{transition-delay:.42s}
+    [data-d="7"]{transition-delay:.49s}[data-d="8"]{transition-delay:.56s}
+
+    /* NAV */
+    nav#nav{position:sticky;top:0;z-index:200;background:var(--blue);transition:background .3s,backdrop-filter .3s}
+    nav#nav.scrolled{background:rgba(30,56,48,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+    .nav-inner{max-width:1265px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:74px}
+    .nav-logo{display:flex;align-items:baseline;gap:2px;text-decoration:none;transition:opacity .2s;cursor:pointer}
+    .nav-logo:hover{opacity:.85}
+    .nav-logo-script{font-family:'Caveat',cursive;font-size:34px;font-weight:600;color:var(--gold)}
+    .nav-logo-bold{font-size:22px;font-weight:600;color:var(--white);letter-spacing:1px;text-transform:uppercase}
+    .nav-links{display:flex;gap:36px;align-items:center}
+    .nav-links a{color:rgba(255,255,255,.7);font-size:15px;font-weight:400;text-decoration:none;position:relative;padding-bottom:2px;transition:color .2s;cursor:pointer}
+    .nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:1.5px;background:var(--gold);transform:scaleX(0);transition:transform .25s ease}
+    .nav-links a:hover{color:var(--white)}
+    .nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
+    .nav-links a.active{color:var(--white);font-weight:500}
+    .nav-cta{background:var(--gold);color:var(--white);border:none;padding:13px 28px;border-radius:24px;font-size:15px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block;transition:background .2s,transform .2s,box-shadow .2s}
+    .nav-cta:hover{background:var(--gold-dark);transform:translateY(-1px);box-shadow:0 4px 16px rgba(201,168,112,.4)}
+
+    /* HERO BG */
+    .hero-bg{position:relative;overflow:hidden}
+    .hero-bg::before{content:'';position:absolute;inset:-30%;z-index:0;background:radial-gradient(ellipse 65% 55% at 15% 55%,rgba(201,168,112,.12) 0%,transparent 70%),radial-gradient(ellipse 55% 60% at 85% 20%,rgba(91,168,160,.08) 0%,transparent 70%);animation:blobPulse 10s ease-in-out infinite alternate}
+    .hero-bg::after{content:'';position:absolute;inset:0;z-index:0;background-image:radial-gradient(circle,rgba(201,168,112,.16) 1px,transparent 1px);background-size:28px 28px;animation:dotDrift 25s linear infinite;opacity:.48}
+    .hero-bg>*{position:relative;z-index:1}
+
+    /* SHARED TYPOGRAPHY */
+    .section-label{font-family:'Caveat',cursive;font-size:44px;font-weight:600;color:var(--gold);margin-bottom:8px}
+    .section-label.dark{color:var(--blue)}
+    .section-title{font-size:28px;font-weight:600;color:var(--espresso);margin-bottom:10px}
+    .section-sub{font-size:16px;color:var(--muted);line-height:1.6}
+
+    /* SHARED BUTTONS */
+    .btn-gold{background:var(--gold);color:var(--white);border:none;padding:16px 36px;border-radius:28px;font-size:16px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block;position:relative;overflow:hidden;transition:background .25s,transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s;animation:glowPulse 3s ease-in-out infinite}
+    .btn-gold:hover{background:var(--gold-dark);transform:translateY(-3px) scale(1.02);box-shadow:0 12px 32px rgba(201,168,112,.45)}
+    .btn-gold:active{transform:translateY(0) scale(.98)}
+    .btn-outline{background:transparent;color:var(--white);border:2px solid rgba(255,255,255,.4);padding:16px 36px;border-radius:28px;font-size:16px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block;transition:border-color .25s,background .25s,transform .25s}
+    .btn-outline:hover{border-color:rgba(255,255,255,.9);background:rgba(255,255,255,.08);transform:translateY(-2px)}
+    .btn-outline-green{display:inline-block;background:transparent;color:var(--blue);border:2px solid var(--blue);padding:14px 32px;border-radius:24px;font-size:15px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;transition:all .25s cubic-bezier(.34,1.56,.64,1)}
+    .btn-outline-green:hover{background:var(--blue);color:var(--white);transform:translateY(-2px);box-shadow:0 6px 20px rgba(42,74,62,.2)}
+
+    /* ── HOME ── */
+    .rack-wrap{padding:56px 0 0;text-align:center;background:var(--blue)}
+    .garment{transform-origin:top center}
+    .garment-1{animation:sway 3.4s ease-in-out infinite}.garment-2{animation:sway 2.9s ease-in-out infinite .4s}
+    .garment-3{animation:sway 3.7s ease-in-out infinite .2s}.garment-4{animation:sway 3.1s ease-in-out infinite .6s}
+    .garment-5{animation:sway 3.5s ease-in-out infinite .1s}.garment-6{animation:sway 2.8s ease-in-out infinite .5s}
+    .hero{background:var(--blue);padding:0 64px 100px;text-align:center;color:var(--white)}
+    .hero-inner{max-width:860px;margin:0 auto}
+    .hero-title-wrap{margin-bottom:22px;animation:fadeUp .9s cubic-bezier(.22,1,.36,1) .1s both}
+    .hero-script{font-family:'Caveat',cursive;font-size:110px;font-weight:600;color:var(--gold);line-height:1;display:block}
+    .hero-bold{font-size:72px;font-weight:600;color:var(--white);letter-spacing:4px;text-transform:uppercase;line-height:1;display:block}
+    .hero-tagline{font-family:'Caveat',cursive;font-size:28px;color:rgba(255,255,255,.85);margin-bottom:14px;font-weight:500;animation:fadeUp .9s cubic-bezier(.22,1,.36,1) .22s both}
+    .hero-sub{font-size:16px;color:rgba(255,255,255,.65);max-width:500px;margin:0 auto 36px;line-height:1.7;animation:fadeUp .9s cubic-bezier(.22,1,.36,1) .34s both}
+    .hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fadeUp .9s cubic-bezier(.22,1,.36,1) .46s both}
+    .notepad-section{background:var(--blue);padding:0 64px 92px;display:flex;justify-content:center}
+    .notepad{background:var(--white);border-radius:4px;padding:44px 48px;max-width:620px;width:100%;position:relative;box-shadow:4px 8px 0 rgba(107,94,80,.12),0 20px 40px rgba(0,0,0,.15);border:1px solid rgba(107,122,170,.15);transform:rotate(-.4deg);transition:transform .3s,box-shadow .3s}
+    .notepad:hover{transform:rotate(0deg) translateY(-4px);box-shadow:4px 12px 0 rgba(107,94,80,.12),0 28px 52px rgba(0,0,0,.18)}
+    .notepad::before{content:'';position:absolute;left:-8px;top:10px;bottom:10px;width:13px;background:var(--cream2);border-radius:3px 0 0 3px;border-right:2px solid rgba(107,122,170,.15)}
+    .notepad-heading{font-family:'Caveat',cursive;font-size:28px;font-weight:600;color:var(--espresso);margin-bottom:8px}
+    .notepad-sub{font-size:15px;font-style:italic;color:var(--muted);margin-bottom:22px;font-weight:300}
+    .notepad-list{list-style:none;display:flex;flex-direction:column;gap:14px}
+    .notepad-list li{display:flex;align-items:center;gap:12px;font-size:15px;font-weight:500;color:var(--espresso)}
+    .notepad-list li::before{content:'•';color:var(--gold);font-size:22px;line-height:1}
+    .notepad-arrow{position:absolute;right:-24px;bottom:48px;font-size:38px;color:var(--white);opacity:.6;transform:rotate(20deg)}
+    .steps-section{background:var(--cream);padding:100px 64px;text-align:center}
+    .steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:820px;margin:0 auto 44px}
+    .step-card{background:var(--white);border-radius:20px;padding:36px 26px;border:1.5px solid var(--border);text-align:center;transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .35s,border-color .25s}
+    .step-card:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 16px 40px rgba(42,74,62,.13);border-color:var(--gold)}
+    .step-icon{width:64px;height:64px;border-radius:50%;background:var(--blue);color:var(--white);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-family:'Caveat',cursive;font-size:30px;font-weight:600;transition:transform .3s cubic-bezier(.34,1.56,.64,1),background .25s}
+    .step-card:hover .step-icon{transform:scale(1.12);background:var(--gold)}
+    .step-card h3{font-size:17px;font-weight:600;color:var(--espresso);margin-bottom:8px}
+    .step-card p{font-size:14px;color:var(--muted);line-height:1.6}
+    .compare-section{background:var(--cream);padding:0 64px 88px}
+    .compare-inner{display:flex;align-items:center;justify-content:center;gap:24px;max-width:680px;margin:0 auto 20px}
+    .compare-card{flex:1;border-radius:20px;padding:32px 24px;text-align:center;transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s}
+    .compare-card:hover{transform:translateY(-6px)}
+    .compare-card.ada{background:var(--blue);color:var(--white);box-shadow:0 8px 32px rgba(42,74,62,.25)}
+    .compare-card.ada:hover{box-shadow:0 16px 48px rgba(42,74,62,.35)}
+    .compare-card.platos{background:var(--cream2);border:1.5px solid var(--border)}
+    .compare-label{font-size:13px;font-weight:500;opacity:.75;margin-bottom:10px;letter-spacing:.5px}
+    .compare-card.platos .compare-label{color:var(--muted)}
+    .compare-pct{font-family:'Caveat',cursive;font-size:64px;font-weight:600;color:var(--gold);line-height:1}
+    .compare-pct.low{color:var(--muted);font-size:48px}
+    .compare-card.platos .compare-pct.low{color:#bbb}
+    .compare-desc{font-size:13px;margin-top:8px;opacity:.75;line-height:1.5}
+    .compare-card.platos .compare-desc{color:var(--muted)}
+    .compare-vs{font-family:'Caveat',cursive;font-size:32px;font-weight:600;color:var(--muted);flex-shrink:0}
+    .compare-note{text-align:center;font-size:15px;color:var(--muted);font-style:italic;max-width:480px;margin:0 auto}
+    .why-section{background:var(--cream2);padding:100px 64px;text-align:center}
+    .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:860px;margin:0 auto}
+    .why-card{background:var(--white);border-radius:20px;padding:36px 28px;border:1.5px solid var(--border);text-align:left;transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .35s,border-color .25s}
+    .why-card:hover{transform:translateY(-8px);box-shadow:0 16px 40px rgba(42,74,62,.11);border-color:var(--gold)}
+    .why-card-icon{font-size:36px;margin-bottom:16px;display:block;transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+    .why-card:hover .why-card-icon{transform:scale(1.15) rotate(-3deg)}
+    .why-card h3{font-size:17px;font-weight:600;color:var(--espresso);margin-bottom:8px}
+    .why-card p{font-size:14px;color:var(--muted);line-height:1.6}
+    .stat-band{background:var(--blue);padding:72px 64px 24px;position:relative;overflow:hidden}
+    .stat-band::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(201,168,112,.12) 1px,transparent 1px);background-size:24px 24px;opacity:.6}
+    .stat-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;max-width:860px;margin:0 auto;position:relative}
+    .stat-item{text-align:center;padding:24px 0}
+    .stat-num{font-family:'Caveat',cursive;font-size:60px;font-weight:600;line-height:1;background:linear-gradient(135deg,var(--gold) 0%,#e8c88a 50%,var(--gold) 100%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shine 4s linear infinite}
+    .stat-label{font-size:13px;color:rgba(255,255,255,.6);margin-top:6px;line-height:1.4}
+    .platforms-row{display:flex;align-items:center;justify-content:center;gap:32px;padding:32px 64px 56px;flex-wrap:wrap;position:relative}
+    .platform-badge{background:var(--white);border-radius:16px;padding:20px 44px;display:flex;align-items:center;transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s}
+    .platform-badge:hover{transform:translateY(-6px) scale(1.04);box-shadow:0 12px 32px rgba(0,0,0,.18)}
+    .logo-depop{font-family:'DM Sans',sans-serif;font-size:38px;font-weight:700;color:#FF2300;letter-spacing:-.5px}
+    .logo-ebay{font-family:'DM Sans',sans-serif;font-size:42px;font-weight:800;letter-spacing:-1px;line-height:1}
+    .logo-ebay .e{color:#E53238}.logo-ebay .b{color:#0064D2}.logo-ebay .a{color:#F5AF02}.logo-ebay .y{color:#86B817}
+    .logo-poshmark{font-family:'DM Sans',sans-serif;font-size:36px;font-weight:700;color:#7B2D8B;letter-spacing:-.3px}
+    .cta-section{background:var(--cream);padding:100px 64px;text-align:center}
+
+    /* ── HOW IT WORKS ── */
+    .hw-hero{background:var(--blue);padding:92px 64px;color:var(--white)}
+    .hw-hero-inner{max-width:860px;margin:0 auto}
+    .hw-hero h1{font-size:48px;font-weight:600;color:var(--white);margin-bottom:16px;line-height:1.15;animation:fadeUp .9s cubic-bezier(.22,1,.36,1) .15s both}
+    .hw-hero p{font-size:16px;color:rgba(255,255,255,.7);line-height:1.7;animation:fadeUp .9s cubic-bezier(.22,1,.36,1) .27s both}
+    .hw-steps{background:var(--cream);padding:96px 64px}
+    .steps-timeline{max-width:680px;margin:0 auto}
+    .hw-step-row{display:flex;gap:28px;align-items:flex-start;margin-bottom:20px;background:var(--white);border-radius:20px;padding:30px;border:1.5px solid var(--border);transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .35s,border-color .25s}
+    .hw-step-row:hover{transform:translateX(8px);box-shadow:0 12px 32px rgba(42,74,62,.1);border-color:var(--gold)}
+    .hw-num{min-width:52px;height:52px;border-radius:50%;background:var(--blue);color:var(--white);display:flex;align-items:center;justify-content:center;font-family:'Caveat',cursive;font-size:26px;font-weight:600;flex-shrink:0;transition:transform .3s cubic-bezier(.34,1.56,.64,1),background .25s}
+    .hw-step-row:hover .hw-num{transform:scale(1.12);background:var(--gold)}
+    .hw-body h3{font-size:18px;font-weight:600;color:var(--espresso);margin-bottom:6px}
+    .hw-body p{font-size:15px;color:var(--muted);line-height:1.7}
+    .terms-section{background:var(--cream2);padding:96px 64px}
+    .terms-inner{max-width:680px;margin:0 auto}
+    .terms-card{background:var(--white);border-radius:24px;padding:44px;border:1.5px solid var(--border);box-shadow:0 4px 24px rgba(42,74,62,.06)}
+    .terms-card .section-label{text-align:left;margin-bottom:24px}
+    .term-row{display:flex;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--border);font-size:15px;transition:background .2s,padding-left .2s}
+    .term-row:last-child{border-bottom:none}
+    .term-row:hover{background:rgba(250,243,232,.6);padding-left:8px;border-radius:8px}
+    .term-key{color:var(--muted)}
+    .term-val{font-weight:500;color:var(--espresso)}
+    .term-val.gold{color:var(--gold-dark);font-weight:600}
+
+    /* ── FAQ ── */
+    .faq-hero{background:var(--blue);padding:92px 64px;color:var(--white)}
+    .faq-hero-inner{max-width:860px;margin:0 auto}
+    .faq-hero h1{font-size:48px;font-weight:600;color:var(--white);margin-bottom:16px;line-height:1.15;animation:fadeUp .9s cubic-bezier(.22,1,.36,1) .15s both}
+    .faq-hero p{font-size:16px;color:rgba(255,255,255,.7);line-height:1.7;animation:fadeUp .9s cubic-bezier(.22,1,.36,1) .27s both}
+    .faq-section{background:var(--cream);padding:96px 64px}
+    .faq-inner{max-width:720px;margin:0 auto}
+    .faq-item{background:var(--white);border-radius:18px;margin-bottom:10px;border:1.5px solid var(--border);overflow:hidden;transition:border-color .25s,box-shadow .25s}
+    .faq-item:hover{border-color:rgba(201,168,112,.5);box-shadow:0 6px 20px rgba(42,74,62,.08)}
+    .faq-item.open{border-color:var(--gold);box-shadow:0 8px 28px rgba(42,74,62,.1)}
+    .faq-q{display:flex;justify-content:space-between;align-items:center;padding:22px 26px;cursor:pointer;font-size:16px;font-weight:500;color:var(--espresso);user-select:none}
+    .faq-q-text{flex:1;padding-right:16px}
+    .faq-toggle{width:34px;height:34px;border-radius:50%;background:var(--blue);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;flex-shrink:0;transition:background .25s,transform .35s cubic-bezier(.34,1.56,.64,1)}
+    .faq-item.open .faq-toggle{background:var(--gold);transform:rotate(45deg)}
+    .faq-a-wrap{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.22,1,.36,1)}
+    .faq-a-wrap.open{max-height:300px}
+    .faq-a{font-size:15px;color:var(--muted);line-height:1.8;padding:0 26px 22px}
+    .cta-section-alt{background:var(--cream2);padding:100px 64px;text-align:center}
+
+    /* ── SIGN UP ── */
+    .su-hero{background:var(--blue);padding:80px 64px 60px;color:var(--white)}
+    .su-hero-inner{max-width:860px;margin:0 auto}
+    .su-hero h1{font-size:48px;font-weight:600;color:var(--white);margin-bottom:12px;line-height:1.15;animation:fadeUp .9s cubic-bezier(.22,1,.36,1) .15s both}
+    .su-hero p{font-size:16px;color:rgba(255,255,255,.7);line-height:1.7;max-width:560px;animation:fadeUp .9s cubic-bezier(.22,1,.36,1) .27s both}
+    .su-form-section{background:var(--cream2);padding:64px 64px 88px}
+    .form-wrap{max-width:640px;margin:0 auto;min-height:860px}
+    .form-box{background:var(--white);border-radius:28px;padding:52px;border:1.5px solid var(--border);box-shadow:0 8px 40px rgba(42,74,62,.08);animation:fadeUp .8s cubic-bezier(.22,1,.36,1) .1s both}
+    .field-label-group{font-family:'Caveat',cursive;font-size:26px;font-weight:600;color:var(--blue);margin:32px 0 16px}
+    .field-label-group:first-child{margin-top:0}
+    .field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+    .field label{font-size:13px;font-weight:500;color:var(--espresso)}
+    .field input,.field select,.field textarea{border:1.5px solid rgba(42,74,62,.18);border-radius:14px;padding:13px 16px;font-size:15px;color:var(--espresso);font-family:'DM Sans',sans-serif;background:var(--cream);outline:none;transition:border-color .25s,box-shadow .25s,background .2s;width:100%}
+    .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(42,74,62,.1);background:var(--white)}
+    .field input:hover,.field select:hover,.field textarea:hover{border-color:rgba(42,74,62,.35)}
+    .field textarea{resize:none;height:100px}
+    .opt-group{display:flex;gap:10px;margin-bottom:14px}
+    .opt-btn{flex:1;padding:14px 12px;border-radius:14px;border:1.5px solid rgba(42,74,62,.18);background:var(--cream);font-size:14px;font-weight:500;color:var(--muted);cursor:pointer;text-align:center;font-family:'DM Sans',sans-serif;transition:all .25s cubic-bezier(.34,1.56,.64,1)}
+    .opt-btn:hover{border-color:var(--blue);color:var(--espresso);transform:translateY(-1px)}
+    .opt-btn.on{border-color:var(--blue);background:var(--blue);color:var(--white);box-shadow:0 4px 12px rgba(42,74,62,.2)}
+    .agree-row{display:flex;gap:12px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:28px;margin-top:8px}
+    .agree-row input{margin-top:3px;accent-color:var(--blue);flex-shrink:0;width:16px;height:16px}
+    .form-submit{width:100%;background:var(--gold);color:var(--white);border:none;padding:18px;border-radius:28px;font-size:16px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;position:relative;overflow:hidden;transition:background .25s,transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s;animation:glowPulse 3s ease-in-out infinite}
+    .form-submit:hover{background:var(--gold-dark);transform:translateY(-2px) scale(1.01);box-shadow:0 10px 28px rgba(201,168,112,.45)}
+    .form-submit:active{transform:translateY(0) scale(.99)}
+    .form-submit:disabled{background:#ccc;cursor:not-allowed;animation:none;transform:none;box-shadow:none}
+    .success-box{display:none;text-align:center;padding:60px 32px}
+    .success-box.show{display:block;animation:successPop .6s cubic-bezier(.34,1.56,.64,1) both}
+    .success-icon{font-size:64px;margin-bottom:20px;display:block}
+    .success-box h2{font-family:'Caveat',cursive;font-size:44px;font-weight:600;color:var(--blue);margin-bottom:10px}
+    .success-box p{font-size:16px;color:var(--muted);line-height:1.7;max-width:380px;margin:0 auto 32px}
+    .confetti-dot{position:absolute;width:8px;height:8px;border-radius:2px;animation:confetti 1s ease-out forwards;pointer-events:none}
+
+    /* ── RESPONSIVE 1280 ── */
+    @media(max-width:1280px){
+      .nav-inner{padding:0 24px}.nav-links{gap:24px}
+      .hero{padding:0 32px 84px}.notepad-section{padding:0 32px 76px}
+      .steps-section,.why-section,.cta-section{padding:84px 32px}
+      .compare-section{padding:0 32px 76px}.stat-band{padding:60px 32px 20px}
+      .platforms-row{padding:28px 32px 48px}
+      .hw-hero,.faq-hero,.su-hero{padding:76px 32px}
+      .hw-steps,.terms-section,.faq-section{padding:80px 32px}
+      .cta-section-alt{padding:84px 32px}.su-form-section{padding:56px 32px 76px}
+    }
+    /* ── RESPONSIVE 960 ── */
+    @media(max-width:960px){
+      .nav-inner{padding:0 20px;height:66px}
+      .nav-logo-script{font-size:28px}.nav-logo-bold{font-size:18px}
+      .nav-links{gap:18px}.nav-links a{font-size:13px}
+      .nav-cta{padding:10px 20px;font-size:13px}
+      .hero{padding:0 20px 76px}.hero-script{font-size:88px}.hero-bold{font-size:58px}
+      .notepad-section{padding:0 20px 68px}
+      .steps-section,.why-section,.cta-section{padding:76px 20px}
+      .compare-section{padding:0 20px 68px}.stat-band{padding:52px 20px 16px}
+      .platforms-row{padding:24px 20px 44px;gap:20px}
+      .platform-badge{padding:16px 28px}.logo-depop{font-size:30px}.logo-ebay{font-size:34px}.logo-poshmark{font-size:28px}
+      .hw-hero,.faq-hero,.su-hero{padding:68px 20px}
+      .hw-hero h1,.faq-hero h1,.su-hero h1{font-size:38px}
+      .hw-steps,.faq-section{padding:72px 20px}
+      .terms-section{padding:72px 20px}.cta-section-alt{padding:76px 20px}
+      .su-form-section{padding:48px 20px 68px}
+    }
+    /* ── RESPONSIVE 768 ── */
+    @media(max-width:768px){
+      .nav-inner{padding:0 20px;height:58px}
+      .nav-logo-script{font-size:26px}.nav-logo-bold{font-size:17px}
+      .nav-links{display:none}.nav-cta{padding:9px 18px;font-size:13px}
+      .rack-wrap{padding:24px 0 0}
+      .hero{padding:0 20px 60px}.hero-script{font-size:64px}.hero-bold{font-size:44px;letter-spacing:2px}
+      .hero-tagline{font-size:14px}.hero-sub{font-size:14px}
+      .btn-gold,.btn-outline{padding:13px 24px;font-size:14px}
+      .notepad-section{padding:0 20px 60px}.notepad{padding:28px 24px;transform:none}
+      .notepad-heading{font-size:22px}.notepad-arrow{display:none}
+      .steps-section{padding:60px 20px}.section-label,.section-label.dark{font-size:28px}.section-title{font-size:22px}.section-sub{font-size:14px;margin-bottom:36px}
+      .steps-grid{grid-template-columns:1fr;gap:12px}
+      .compare-section{padding:0 20px 68px}.compare-inner{flex-direction:column;max-width:100%}
+      .why-section{padding:60px 20px}.why-grid{grid-template-columns:1fr;gap:12px}.why-card{padding:24px 20px}
+      .stat-band{padding:52px 20px 16px}.stat-inner{grid-template-columns:repeat(2,1fr)}.stat-num{font-size:44px}
+      .platforms-row{gap:14px;padding:20px}.platform-badge{padding:14px 24px}.logo-depop{font-size:26px}.logo-ebay{font-size:30px}.logo-poshmark{font-size:24px}
+      .cta-section{padding:60px 20px}
+      .hw-hero,.faq-hero,.su-hero{padding:60px 20px}
+      .hw-hero h1,.faq-hero h1,.su-hero h1{font-size:30px}.hw-hero p,.faq-hero p,.su-hero p{font-size:14px}
+      .hw-steps{padding:56px 20px}.hw-step-row{padding:20px;gap:16px}.hw-step-row:hover{transform:none}
+      .hw-num{min-width:42px;height:42px;font-size:22px}.hw-body h3{font-size:16px}.hw-body p{font-size:13px}
+      .terms-section{padding:56px 20px}.terms-card{padding:28px 20px;border-radius:16px}
+      .term-row{font-size:13px;flex-direction:column;gap:4px;padding:12px 0}.term-key{font-size:12px}
+      .faq-section{padding:56px 20px}.faq-inner{max-width:100%}
+      .faq-q{font-size:14px;padding:18px}.faq-a{font-size:13px;padding:0 18px 18px}
+      .cta-section-alt{padding:60px 20px}
+      .su-form-section{padding:40px 20px 60px}.form-wrap{max-width:100%}.form-box{padding:32px 24px;border-radius:20px}
+      .field-label-group{font-size:22px}.field-row{grid-template-columns:1fr}
+      .field input,.field select,.field textarea{font-size:14px;padding:12px 14px}
+      .opt-btn{font-size:13px;padding:13px 8px}.form-submit{font-size:15px;padding:16px}
+    }
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+      [data-reveal]{opacity:1;transform:none}
+    }
+
+    /* ── FOOTER ── */
+    .site-footer{background:var(--blue-dark,#1e3830)}
+    .footer-inner{max-width:1265px;margin:0 auto;padding:40px 40px 32px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:32px;overflow:visible}
+    .footer-logo{display:flex;align-items:baseline;gap:2px;cursor:pointer;transition:opacity .2s;min-width:120px}
+    .footer-logo:hover{opacity:.8}
+    .footer-logo-script{font-family:'Caveat',cursive;font-size:28px;font-weight:600;color:var(--gold);white-space:nowrap}
+    .footer-logo-bold{font-size:16px;font-weight:600;color:rgba(255,255,255,.75);letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+    .footer-nav{display:flex;gap:28px;justify-content:center;align-items:center}
+    .footer-nav a{color:rgba(255,255,255,.5);font-size:14px;text-decoration:none;cursor:pointer;transition:color .2s}
+    .footer-nav a:hover{color:var(--gold)}
+    .footer-nav .footer-signup-btn{background:var(--gold);color:var(--white)!important;padding:8px 20px;border-radius:20px;font-weight:600;font-size:13px;opacity:1!important;transition:background .2s,transform .15s}
+    .footer-nav .footer-signup-btn:hover{background:var(--gold-dark);color:var(--white)!important;transform:translateY(-1px)}
+    .footer-right{text-align:right}
+    .footer-tagline{font-family:'Caveat',cursive;font-size:18px;color:var(--gold);opacity:.8;margin-bottom:4px}
+    .footer-copy{font-size:12px;color:rgba(255,255,255,.35);line-height:1.5}
+    .footer-divider{display:none}
+    .footer-bottom{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:rgba(255,255,255,.3)}
+    .footer-platforms{display:flex;gap:16px;align-items:center}
+    .footer-platforms span{font-size:12px;color:rgba(255,255,255,.35);font-weight:500}
+
+    @media(max-width:1280px){.footer-inner{padding:36px 24px 28px}}
+    @media(max-width:960px){
+      .footer-inner{padding:32px 20px 24px;grid-template-columns:1fr 1fr;gap:20px}
+      .footer-nav{grid-column:1/-1;order:-1;gap:20px}
+      .footer-right{text-align:left}
+      .footer-divider{margin:4px 0}
+      .footer-bottom{flex-direction:column;gap:8px;align-items:flex-start}
+    }
+    @media(max-width:768px){
+      .footer-inner{grid-template-columns:1fr;text-align:center;gap:16px;padding:28px 20px 20px}
+      .footer-logo{justify-content:center}
+      .footer-nav{gap:16px;flex-wrap:wrap}
+      .footer-right{text-align:center}
+      .footer-bottom{align-items:center;text-align:center}
+      .footer-platforms{justify-content:center}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="go('home')">
+      <span class="nav-logo-script">Ada's</span>
+      <span class="nav-logo-bold">CLOSET</span>
+    </div>
+    <div class="nav-links">
+      <a id="nl-home"         onclick="go('home')">Home</a>
+      <a id="nl-how-it-works" onclick="go('how-it-works')">How It Works</a>
+      <a id="nl-faq"          onclick="go('faq')">FAQ</a>
+    </div>
+    <div class="nav-cta" onclick="go('signup')">Sign Up</div>
+  </div>
+</nav>
+
+<!-- ═══════ HOME ═══════ -->
+<div class="page" id="page-home">
+  <div class="hero-bg" style="background:var(--blue)">
+    <div class="rack-wrap">
+      <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style="max-width:900px;width:100%">
+        <rect x="60" y="60" width="580" height="8" rx="4" fill="#C9A870"/>
+        <path d="M350 20 Q370 20 370 40 Q370 60 350 60" stroke="#C9A870" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <line x1="350" y1="20" x2="350" y2="5" stroke="#C9A870" stroke-width="5" stroke-linecap="round"/>
+        <path d="M130 68 Q130 55 145 55 Q160 55 160 68" stroke="rgba(255,255,255,0.6)" stroke-width="3" fill="none"/>
+        <path d="M210 68 Q210 55 225 55 Q240 55 240 68" stroke="rgba(255,255,255,0.6)" stroke-width="3" fill="none"/>
+        <path d="M290 68 Q290 55 305 55 Q320 55 320 68" stroke="rgba(255,255,255,0.6)" stroke-width="3" fill="none"/>
+        <path d="M370 68 Q370 55 385 55 Q400 55 400 68" stroke="rgba(255,255,255,0.6)" stroke-width="3" fill="none"/>
+        <path d="M450 68 Q450 55 465 55 Q480 55 480 68" stroke="rgba(255,255,255,0.6)" stroke-width="3" fill="none"/>
+        <path d="M530 68 Q530 55 545 55 Q560 55 560 68" stroke="rgba(255,255,255,0.6)" stroke-width="3" fill="none"/>
+        <g class="garment garment-1"><path d="M118 68 Q128 68 142 68 L155 210 Q145 215 130 215 Q115 215 105 210 Z" fill="#E8876A"/><line x1="112" y1="100" x2="148" y2="100" stroke="rgba(255,255,255,0.4)" stroke-width="2"/><line x1="110" y1="120" x2="150" y2="120" stroke="rgba(255,255,255,0.4)" stroke-width="2"/><line x1="108" y1="140" x2="152" y2="140" stroke="rgba(255,255,255,0.4)" stroke-width="2"/></g>
+        <g class="garment garment-2"><path d="M198 68 L222 68 L235 90 L225 95 L225 190 L195 190 L195 95 L185 90 Z" fill="#C9A870"/></g>
+        <g class="garment garment-3"><path d="M278 68 Q290 68 312 68 L320 210 Q305 216 295 216 Q280 216 270 210 Z" fill="#7BAF8E"/></g>
+        <g class="garment garment-4"><path d="M358 68 L385 68 L398 88 L388 93 L388 195 L355 195 L355 93 L345 88 Z" fill="#EDE4D5"/><line x1="371" y1="93" x2="371" y2="195" stroke="rgba(180,160,130,0.5)" stroke-width="1.5"/></g>
+        <g class="garment garment-5"><path d="M438 68 Q450 68 472 68 L480 210 Q465 216 455 216 Q440 216 430 210 Z" fill="#5BA8A0"/><circle cx="450" cy="110" r="4" fill="rgba(255,255,255,0.5)"/><circle cx="462" cy="130" r="3" fill="rgba(255,255,255,0.5)"/><circle cx="445" cy="150" r="3" fill="rgba(255,255,255,0.5)"/><circle cx="465" cy="155" r="4" fill="rgba(255,255,255,0.5)"/></g>
+        <g class="garment garment-6"><path d="M522 68 L552 68 L558 160 L548 160 L543 130 L537 160 L527 160 L522 68 Z" fill="#8B6347"/></g>
+      </svg>
+    </div>
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-title-wrap"><span class="hero-script">Ada's</span><span class="hero-bold">CLOSET</span></div>
+        <p class="hero-tagline">Your 1-stop consignment service · Spring Arbor, MI</p>
+        <p class="hero-sub">Have clothes you don't wear anymore? Turn them into cash. Drop off your bag and we handle the listing, selling, and payout — no work required.</p>
+        <div class="hero-btns">
+          <div class="btn-gold" onclick="go('signup')">Sign Up to Consign</div>
+          <div class="btn-outline" onclick="go('how-it-works')">How It Works</div>
+        </div>
+      </div>
+    </section>
+    <section class="notepad-section">
+      <div class="notepad" data-reveal="left">
+        <p class="notepad-heading">Have clothes you don't wear anymore?</p>
+        <p class="notepad-sub">Turn them into cash — right from home.</p>
+        <ul class="notepad-list">
+          <li>We list, sell &amp; handle everything for you</li>
+          <li>Sell clothes, shoes &amp; accessories</li>
+          <li>Drop off at SAU or request a pickup</li>
+          <li>Get paid via Venmo or CashApp</li>
+          <li>No upfront cost — ever</li>
+          <li>Earn <strong>≥ 2x</strong> what a consignment store pays out</li>
+        </ul>
+        <span class="notepad-arrow">↘</span>
+      </div>
+    </section>
+  </div>
+  <section class="steps-section">
+    <p class="section-label dark" data-reveal>The Process</p>
+    <h2 class="section-title" data-reveal data-d="1">Simple as 1, 2, 3</h2>
+    <p class="section-sub" data-reveal data-d="2" style="margin-bottom:52px">We take care of everything after you hand it off.</p>
+    <div class="steps-grid">
+      <div class="step-card" data-reveal data-d="1"><div class="step-icon">1</div><h3>Sign up online</h3><p>Fill out our quick form. Takes 2 minutes.</p></div>
+      <div class="step-card" data-reveal data-d="2"><div class="step-icon">2</div><h3>Drop off or pickup</h3><p>Bring your bag to SAU or we come to you.</p></div>
+      <div class="step-card" data-reveal data-d="3"><div class="step-icon">3</div><h3>Get paid</h3><p>We sell it. You get your cut via Venmo or CashApp.</p></div>
+    </div>
+    <div class="btn-gold" onclick="go('signup')" data-reveal data-d="4" style="animation:none">Get Started</div>
+  </section>
+  <section class="compare-section">
+    <div class="compare-inner" data-reveal="scale">
+      <div class="compare-card ada"><p class="compare-label">Ada's Closet</p><div class="compare-pct">≥30%</div><p class="compare-desc">of final sale price — yours to keep</p></div>
+      <div class="compare-vs">vs</div>
+      <div class="compare-card platos"><p class="compare-label">Typical Consignment Store</p><div class="compare-pct low">~5–10%</div><p class="compare-desc">upfront offer, take it or leave it</p></div>
+    </div>
+    <p class="compare-note" data-reveal data-d="1">With Ada's Closet you earn more — and we do all the work.</p>
+  </section>
+  <section class="why-section">
+    <p class="section-label dark" data-reveal>Why Ada's Closet?</p>
+    <h2 class="section-title" data-reveal data-d="1">You don't lift a finger.</h2>
+    <p class="section-sub" data-reveal data-d="2" style="margin-bottom:40px">We bring real resale expertise to every item you give us.</p>
+    <div class="why-grid">
+      <div class="why-card" data-reveal data-d="1"><span class="why-card-icon"><svg width="44" height="44" viewBox="0 0 44 44" fill="none"><path d="M22 4 Q25 4 25 8 Q25 11 22 11" stroke="#C9A870" stroke-width="2" fill="none" stroke-linecap="round"/><line x1="22" y1="4" x2="22" y2="2" stroke="#C9A870" stroke-width="2" stroke-linecap="round"/><path d="M22 11 L14 17 L18 21 L18 40 L26 40 L26 21 L30 17 Z" fill="#2A4A3E"/><line x1="20" y1="27" x2="24" y2="27" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/><line x1="20" y1="31" x2="24" y2="31" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/></svg></span><h3>Expert listing</h3><p>Photos, pricing, and listings on Depop, eBay &amp; Poshmark — all handled by us.</p></div>
+      <div class="why-card" data-reveal data-d="2"><span class="why-card-icon"><svg width="44" height="44" viewBox="0 0 44 44" fill="none"><path d="M22 6 L22 12 L16 18 L10 16 L10 38 L34 38 L34 16 L28 18 L22 12" fill="#E8876A"/><path d="M22 12 L22 38" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/><circle cx="22" cy="22" r="1.5" fill="rgba(255,255,255,0.5)"/><circle cx="22" cy="27" r="1.5" fill="rgba(255,255,255,0.5)"/><circle cx="22" cy="32" r="1.5" fill="rgba(255,255,255,0.5)"/></svg></span><h3>You get paid</h3><p>Your cut lands in your Venmo or CashApp after the item sells.</p></div>
+      <div class="why-card" data-reveal data-d="3"><span class="why-card-icon"><svg width="44" height="44" viewBox="0 0 44 44" fill="none"><path d="M15 18 Q15 12 22 12 Q29 12 29 18" stroke="#C9A870" stroke-width="2.5" fill="none" stroke-linecap="round"/><rect x="10" y="18" width="24" height="22" rx="3" fill="#2A4A3E"/><line x1="10" y1="24" x2="34" y2="24" stroke="rgba(255,255,255,0.25)" stroke-width="1"/><path d="M18 31 Q22 34 26 31" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></span><h3>Local &amp; easy</h3><p>Drop off at SAU or we pick up from you in the Spring Arbor &amp; Jackson area.</p></div>
+      <div class="why-card" data-reveal data-d="1"><span class="why-card-icon"><svg width="44" height="44" viewBox="0 0 44 44" fill="none"><path d="M16 8 Q19 12 22 12 Q25 12 28 8 L36 14 L32 20 L28 17 L28 38 L16 38 L16 17 L12 20 L8 14 Z" fill="#7BAF8E"/></svg></span><h3>No risk, ever</h3><p>If items don't sell, we return or donate them. You choose — zero stress.</p></div>
+      <div class="why-card" data-reveal data-d="2"><span class="why-card-icon"><svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="8" y="20" width="28" height="18" rx="3" fill="#8B6347"/><path d="M8 20 L6 12 L38 12 L36 20 Z" fill="#a0754f"/><path d="M17 12 Q17 6 22 6 Q27 6 27 12" stroke="#C9A870" stroke-width="2" fill="none" stroke-linecap="round"/><line x1="6" y1="12" x2="38" y2="12" stroke="#C9A870" stroke-width="1.5"/></svg></span><h3>All items welcome</h3><p>Clothes, shoes, accessories — bring whatever you no longer wear.</p></div>
+      <div class="why-card" data-reveal data-d="3"><span class="why-card-icon"><svg width="44" height="44" viewBox="0 0 44 44" fill="none"><ellipse cx="22" cy="30" rx="16" ry="5" fill="#C9A870"/><path d="M13 30 Q13 14 22 12 Q31 14 31 30" fill="#d4b47a"/><ellipse cx="22" cy="30" rx="16" ry="5" fill="none" stroke="#a8864e" stroke-width="1"/><path d="M16 22 Q22 20 28 22" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></span><h3>Accessories too</h3><p>Bags, hats, belts, jewelry — we list and sell it all for you.</p></div>
+    </div>
+  </section>
+  <section class="stat-band">
+    <div class="stat-inner">
+      <div class="stat-item" data-reveal data-d="1"><div class="stat-num">3</div><div class="stat-label">Platforms we sell on</div></div>
+      <div class="stat-item" data-reveal data-d="2"><div class="stat-num">≥30%</div><div class="stat-label">Your cut of every sale</div></div>
+      <div class="stat-item" data-reveal data-d="3"><div class="stat-num">24h</div><div class="stat-label">Response after sign-up</div></div>
+      <div class="stat-item" data-reveal data-d="4"><div class="stat-num">$0</div><div class="stat-label">Upfront cost to you</div></div>
+    </div>
+    <div class="platforms-row">
+      <div class="platform-badge" data-reveal data-d="1"><span class="logo-depop">depop</span></div>
+      <div class="platform-badge" data-reveal data-d="2"><span class="logo-ebay"><span class="e">e</span><span class="b">B</span><span class="a">a</span><span class="y">y</span></span></div>
+      <div class="platform-badge" data-reveal data-d="3"><span class="logo-poshmark">poshmark</span></div>
+    </div>
+  </section>
+  <section class="cta-section">
+    <p class="section-label dark" data-reveal>Ready?</p>
+    <h2 class="section-title" data-reveal data-d="1">Clear out your closet today.</h2>
+    <p class="section-sub" data-reveal data-d="2" style="margin-bottom:32px">Sign up in 2 minutes. We handle everything else.</p>
+    <div class="btn-gold" onclick="go('signup')" data-reveal data-d="3" style="animation:none">Sign Up to Consign</div>
+  </section>
+</div>
+
+<!-- ═══════ HOW IT WORKS ═══════ -->
+<div class="page" id="page-how-it-works">
+  <div class="hero-bg" style="background:var(--blue)">
+    <section class="hw-hero"><div class="hw-hero-inner"><p class="section-label">The Process</p><h1>How it works.</h1><p>We made consigning as easy as ordering DoorDash. Here's exactly what happens from sign-up to payout.</p></div></section>
+  </div>
+  <section class="hw-steps">
+    <div class="steps-timeline">
+      <div class="hw-step-row" data-reveal data-d="1"><div class="hw-num">1</div><div class="hw-body"><h3>Fill out the sign-up form</h3><p>Tell us your name, contact info, a rough description of what you're bringing, and whether you'd like to drop off at SAU or have us pick it up.</p></div></div>
+      <div class="hw-step-row" data-reveal data-d="2"><div class="hw-num">2</div><div class="hw-body"><h3>Drop off or schedule a pickup</h3><p>Bring your bag to Ada's at Spring Arbor University on a scheduled drop-off day, or request a pickup from your location. A small fee may apply for pickup service.</p></div></div>
+      <div class="hw-step-row" data-reveal data-d="3"><div class="hw-num">3</div><div class="hw-body"><h3>We photograph and list everything</h3><p>Our team handles photos, pricing, and listing on Depop, eBay, and Poshmark — using years of resale experience to maximize your sale price.</p></div></div>
+      <div class="hw-step-row" data-reveal data-d="4"><div class="hw-num">4</div><div class="hw-body"><h3>Your items sell — you get paid</h3><p>When something sells, we send your cut directly via Venmo or CashApp. You'll always know what sold and what you earned.</p></div></div>
+    </div>
+  </section>
+  <section class="terms-section">
+    <div class="terms-inner">
+      <div class="terms-card" data-reveal="scale">
+        <p class="section-label">Consignment Terms</p>
+        <div class="term-row"><span class="term-key">Your cut of every sale</span><span class="term-val gold">≥ 30% of the final sale price</span></div>
+        <div class="term-row"><span class="term-key">Payout method</span><span class="term-val">Venmo or CashApp</span></div>
+        <div class="term-row"><span class="term-key">Drop-off location</span><span class="term-val">Ada's at SAU, Spring Arbor</span></div>
+        <div class="term-row"><span class="term-key">Pickup option</span><span class="term-val">Available — small fee applies</span></div>
+        <div class="term-row"><span class="term-key">Items accepted</span><span class="term-val">Clothes, shoes, accessories</span></div>
+        <div class="term-row"><span class="term-key">If items don't sell</span><span class="term-val">Returned or donated — your choice</span></div>
+        <div class="term-row"><span class="term-key">Listing timeline</span><span class="term-val">Within 1 week of receiving items</span></div>
+      </div>
+    </div>
+  </section>
+  <section class="cta-section">
+    <p class="section-label dark" data-reveal>Ready?</p>
+    <h2 class="section-title" data-reveal data-d="1">Takes 2 minutes to sign up.</h2>
+    <p class="section-sub" data-reveal data-d="2" style="margin-bottom:32px">We'll reach out within 24 hours to get everything scheduled.</p>
+    <div class="btn-gold" onclick="go('signup')" data-reveal data-d="3" style="animation:none">Sign Up to Consign</div>
+  </section>
+</div>
+
+<!-- ═══════ FAQ ═══════ -->
+<div class="page" id="page-faq">
+  <div class="hero-bg" style="background:var(--blue)">
+    <section class="faq-hero"><div class="faq-hero-inner"><p class="section-label">Questions</p><h1>Frequently asked questions.</h1><p>Everything you need to know before signing up.</p></div></section>
+  </div>
+  <section class="faq-section">
+    <div class="faq-inner">
+      <div class="faq-item" data-reveal data-d="1"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">How much do I get paid?</span><div class="faq-toggle">+</div></div><div class="faq-a-wrap"><div class="faq-a">You receive at least 30% of the final sale price. Payout is sent directly via Venmo or CashApp after your item sells — no waiting, no chasing.</div></div></div>
+      <div class="faq-item" data-reveal data-d="2"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Where do I drop off my clothes?</span><div class="faq-toggle">+</div></div><div class="faq-a-wrap"><div class="faq-a">You can drop off at Ada's at Spring Arbor University. Drop-off days are scheduled throughout the summer. We also offer pickup from your location in the Spring Arbor and Jackson area for a small additional fee.</div></div></div>
+      <div class="faq-item" data-reveal data-d="3"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">What platforms do you sell on?</span><div class="faq-toggle">+</div></div><div class="faq-a-wrap"><div class="faq-a">We list on Depop, eBay, and Poshmark. Our team has years of experience and knows how to price, photograph, and write listings that actually sell.</div></div></div>
+      <div class="faq-item" data-reveal data-d="4"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">What types of items do you accept?</span><div class="faq-toggle">+</div></div><div class="faq-a-wrap"><div class="faq-a">We accept clothes, shoes, and accessories in good, sellable condition. Items should be clean and free of major damage.</div></div></div>
+      <div class="faq-item" data-reveal data-d="5"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">How long does it take for items to sell?</span><div class="faq-toggle">+</div></div><div class="faq-a-wrap"><div class="faq-a">It depends on the item. Popular pieces can sell within days. We aim to have everything listed within one week of receiving it.</div></div></div>
+      <div class="faq-item" data-reveal data-d="6"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">What if my items don't sell?</span><div class="faq-toggle">+</div></div><div class="faq-a-wrap"><div class="faq-a">If your items don't sell within a reasonable timeframe, we'll contact you and give you the choice to have them returned or donated.</div></div></div>
+      <div class="faq-item" data-reveal data-d="7"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Is there any upfront cost?</span><div class="faq-toggle">+</div></div><div class="faq-a-wrap"><div class="faq-a">No. Consigning with Ada's Closet is completely free upfront. We only make money when you make money. Pickup has a small fee, but drop-off is always free.</div></div></div>
+      <div class="faq-item" data-reveal data-d="8"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Who is Ada's Closet?</span><div class="faq-toggle">+</div></div><div class="faq-a-wrap"><div class="faq-a">Ada's Closet is a student-run resale venture out of Spring Arbor University, operating under the Marketing &amp; Entrepreneurship Hub. We combine real resale business experience with a passion for sustainable fashion.</div></div></div>
+    </div>
+  </section>
+  <section class="cta-section-alt">
+    <p class="section-label" data-reveal>Still have questions?</p>
+    <h2 class="section-title" data-reveal data-d="1">We'd love to hear from you.</h2>
+    <p class="section-sub" data-reveal data-d="2" style="margin-bottom:32px">Just sign up — we'll walk you through everything.</p>
+    <div class="btn-gold" onclick="go('signup')" data-reveal data-d="3" style="animation:none">Sign Up to Consign</div>
+  </section>
+</div>
+
+<!-- ═══════ SIGN UP ═══════ -->
+<div class="page" id="page-signup">
+  <div class="hero-bg" style="background:var(--blue)">
+    <section class="su-hero"><div class="su-hero-inner"><p class="section-label">Get Started</p><h1>Sign up to consign.</h1><p>Fill this out and we'll reach out within 24 hours to get your items scheduled. Free, easy, no commitment.</p></div></section>
+  </div>
+  <section class="su-form-section">
+    <div class="form-wrap">
+      <div class="form-box" id="form-box">
+        <p class="field-label-group">Your info</p>
+        <div class="field-row">
+          <div class="field"><label>First name *</label><input type="text" id="firstName" placeholder="Christie"/></div>
+          <div class="field"><label>Last name *</label><input type="text" id="lastName" placeholder="Myers"/></div>
+        </div>
+        <div class="field"><label>Phone number *</label><input type="tel" id="phone" placeholder="(517) 000-0000"/></div>
+        <div class="field"><label>Email address *</label><input type="email" id="email" placeholder="you@email.com"/></div>
+        <p class="field-label-group">Your items</p>
+        <div class="field"><label>What are you bringing?</label><textarea id="items" placeholder="e.g. 1 bag of women's clothes, a few pairs of shoes..."></textarea></div>
+        <div class="field"><label>Rough item count</label><select id="itemCount"><option value="">Select a range</option><option>1–5 items</option><option>6–15 items</option><option>16–30 items</option><option>30+ items</option></select></div>
+        <p class="field-label-group">Hand-off preference</p>
+        <div class="opt-group" id="grp-handoff">
+          <div class="opt-btn on" onclick="pick(this,'grp-handoff')">Drop off at SAU</div>
+          <div class="opt-btn"    onclick="pick(this,'grp-handoff')">Request pickup</div>
+        </div>
+        <p class="field-label-group">Payout preference</p>
+        <div class="opt-group" id="grp-payout">
+          <div class="opt-btn on" onclick="pick(this,'grp-payout')">Venmo</div>
+          <div class="opt-btn"    onclick="pick(this,'grp-payout')">CashApp</div>
+        </div>
+        <div class="agree-row">
+          <input type="checkbox" id="agree" checked/>
+          <span>I agree to Ada's Closet consignment terms — I'll receive at least 30% of the final sale price, paid out after my item sells.</span>
+        </div>
+        <button class="form-submit" id="submit-btn" onclick="submitForm()">Submit My Sign-Up →</button>
+      </div>
+      <div class="form-box success-box" id="success-box">
+        <div class="success-icon">🎉</div>
+        <h2>You're signed up!</h2>
+        <p>We got your info and will reach out within 24 hours to schedule your drop-off or pickup.</p>
+        <div class="btn-outline-green" onclick="go('home')">Back to Home</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo" onclick="go('home')">
+      <span class="footer-logo-script">Ada's</span>
+      <span class="footer-logo-bold">CLOSET</span>
+    </div>
+    <div class="footer-nav">
+      <a onclick="go('home')">Home</a>
+      <a onclick="go('how-it-works')">How It Works</a>
+      <a onclick="go('faq')">FAQ</a>
+      <a onclick="go('signup')" class="footer-signup-btn">Sign Up</a>
+    </div>
+    <div class="footer-right">
+      <p class="footer-tagline">Turn your closet into cash.</p>
+      <p class="footer-copy">Student-run · Spring Arbor University<br>Spring Arbor &amp; Jackson, MI</p>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <span>© 2026 Ada's Closet · All rights reserved</span>
+      <div class="footer-platforms">
+        <span>We sell on:</span>
+        <span style="color:#FF2300;font-weight:700">depop</span>
+        <span style="font-weight:800"><span style="color:#E53238">e</span><span style="color:#0064D2">B</span><span style="color:#F5AF02">a</span><span style="color:#86B817">y</span></span>
+        <span style="color:#7B2D8B;font-weight:700">poshmark</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw5tBLwjDNl8PxNBDdYPOgf-Vq5spy5cmZowiUkm4qtZz-TqXSLmBehsaR6uPjctw0vrQ/exec';
+  const ALL_PAGES  = ['home','how-it-works','faq','signup'];
+  let cur = null;
+
+  /* Intersection Observer for scroll reveals */
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+
+  function setupReveals(pageEl) {
+    pageEl.querySelectorAll('[data-reveal]').forEach(el => { el.classList.remove('vis'); obs.unobserve(el); });
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      pageEl.querySelectorAll('[data-reveal]').forEach(el => {
+        el.getBoundingClientRect().top < window.innerHeight * .92
+          ? el.classList.add('vis')
+          : obs.observe(el);
+      });
+    }));
+  }
+
+  function go(id) {
+    if (!ALL_PAGES.includes(id)) id = 'home';
+    if (cur === id) return;
+    cur = id;
+    ALL_PAGES.forEach(p => document.getElementById('page-'+p).classList.remove('active'));
+    const el = document.getElementById('page-'+id);
+    el.classList.add('active');
+    ALL_PAGES.forEach(p => { const a = document.getElementById('nl-'+p); if(a) a.classList.toggle('active', p===id); });
+    window.scrollTo({top:0,behavior:'instant'});
+    setupReveals(el);
+    history.pushState(null,'','#'+id);
+  }
+
+  window.addEventListener('popstate', () => go(location.hash.replace('#','') || 'home'));
+  go(location.hash.replace('#','') || 'home');
+
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+  }, {passive:true});
+
+  /* FAQ accordion */
+  function toggleFaq(qEl) {
+    const item = qEl.closest('.faq-item');
+    const wrap = item.querySelector('.faq-a-wrap');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(el => { el.classList.remove('open'); el.querySelector('.faq-a-wrap').classList.remove('open'); });
+    if (!isOpen) { item.classList.add('open'); wrap.classList.add('open'); }
+  }
+
+  /* Form */
+  function pick(el, grp) {
+    document.getElementById(grp).querySelectorAll('.opt-btn').forEach(b => b.classList.remove('on'));
+    el.classList.add('on');
+  }
+  function getSelected(grp) {
+    const on = document.getElementById(grp).querySelector('.opt-btn.on');
+    return on ? on.textContent.trim() : '';
+  }
+  function spawnConfetti() {
+    const colors = ['#C9A870','#2A4A3E','#E8876A','#7BAF8E','#5BA8A0'];
+    const box = document.getElementById('success-box');
+    for (let i=0;i<20;i++) {
+      const d = document.createElement('div'); d.className='confetti-dot';
+      d.style.cssText=`left:${10+Math.random()*80}%;top:${20+Math.random()*40}%;background:${colors[Math.floor(Math.random()*colors.length)]};animation-delay:${Math.random()*.4}s;animation-duration:${.8+Math.random()*.6}s;transform:rotate(${Math.random()*180}deg);`;
+      box.appendChild(d); setTimeout(()=>d.remove(),1400);
+    }
+  }
+  function submitForm() {
+    const fn=document.getElementById('firstName').value.trim();
+    const ln=document.getElementById('lastName').value.trim();
+    const ph=document.getElementById('phone').value.trim();
+    const em=document.getElementById('email').value.trim();
+    if (!fn||!ln||!ph||!em){alert('Please fill in your name, phone, and email.');return;}
+    if (!document.getElementById('agree').checked){alert('Please agree to the consignment terms.');return;}
+    document.getElementById('form-box').style.display='none';
+    const sb=document.getElementById('success-box'); sb.style.display='block'; sb.classList.add('show');
+    setTimeout(spawnConfetti,200);
+    fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({firstName:fn,lastName:ln,phone:ph,email:em,
+        items:document.getElementById('items').value.trim(),
+        itemCount:document.getElementById('itemCount').value,
+        handoff:getSelected('grp-handoff'),payout:getSelected('grp-payout')})
+    }).catch(()=>{});
+  }
+
+  /* Global ripple */
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.btn-gold,.form-submit');
+    if (!btn) return;
+    const r=document.createElement('span'); const rect=btn.getBoundingClientRect();
+    const sz=Math.max(rect.width,rect.height)*2;
+    r.style.cssText=`position:absolute;width:${sz}px;height:${sz}px;border-radius:50%;background:rgba(255,255,255,.28);transform:scale(0);left:${e.clientX-rect.left-sz/2}px;top:${e.clientY-rect.top-sz/2}px;animation:ripple .5s ease-out forwards;pointer-events:none;`;
+    btn.appendChild(r); setTimeout(()=>r.remove(),600);
+  });
+</script>
+</body>
+</html>
