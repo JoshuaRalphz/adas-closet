@@ -698,6 +698,11 @@
           <div class="opt-btn" onclick="pick(this,'grp-payout')">Venmo</div>
           <div class="opt-btn" onclick="pick(this,'grp-payout')">CashApp</div>
         </div>
+        <label class="field-label" for="payoutHandle">Your Venmo or CashApp username</label>
+        <div style="position:relative">
+          <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#888;font-size:15px;pointer-events:none">@</span>
+          <input class="form-input" id="payoutHandle" type="text" placeholder="yourhandle" style="padding-left:28px" required/>
+        </div>
         <div class="agree-row">
           <input type="checkbox" id="agree" checked/>
           <span>I agree to Ada's Closet consignment terms — I'll receive 70% of the final sale price, paid out after my item sells.</span>
@@ -948,11 +953,13 @@
     const itemCount=document.getElementById('itemCount').value;
     const handoff=getSelected('grp-handoff');
     const payout=getSelected('grp-payout');
+    const payoutHandle=document.getElementById('payoutHandle').value.trim().replace(/^@/,'');
     if (!fn||!ln||!ph||!em){showAlert('Please fill in your name, phone, and email.');return;}
     if (!items){showAlert('Please describe what items you\'re bringing.');return;}
     if (!itemCount){showAlert('Please select a rough item count.');return;}
     if (!handoff){showAlert('Please select a hand-off preference (drop off or pickup).');return;}
     if (!payout){showAlert('Please select a payout preference (Venmo or CashApp).');return;}
+    if (!payoutHandle){showAlert('Please enter your Venmo or CashApp username so we can send your payout.');return;}
     if (!document.getElementById('agree').checked){showAlert('Please agree to the consignment terms.');return;}
     document.getElementById('form-box').style.display='none';
     const sb=document.getElementById('success-box'); sb.style.display='block'; sb.classList.add('show');
@@ -963,7 +970,7 @@
     setTimeout(spawnConfetti,200);
     fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({firstName:fn,lastName:ln,phone:ph,email:em,
-        items:items,itemCount:itemCount,handoff:handoff,payout:payout})
+        items:items,itemCount:itemCount,handoff:handoff,payout:payout,payoutHandle:payoutHandle})
     }).catch(()=>{});
   }
 
