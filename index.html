@@ -455,6 +455,8 @@
     .footer-right{text-align:right}
     .footer-tagline{font-family:'Caveat',cursive;font-size:18px;color:var(--gold);opacity:.8;margin-bottom:4px}
     .footer-copy{font-size:12px;color:rgba(255,255,255,.35);line-height:1.5}
+    .footer-email{font-size:12px;color:var(--gold);opacity:.8;text-decoration:none;display:block;margin-top:4px;transition:opacity .2s}
+    .footer-email:hover{opacity:1}
     .footer-divider{display:none}
     .footer-bottom{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:rgba(255,255,255,.3)}
     .footer-platforms{display:flex;gap:16px;align-items:center}
@@ -695,7 +697,7 @@
       <div class="form-box success-box" id="success-box">
         <div class="success-icon">🎉</div>
         <h2>You're signed up!</h2>
-        <p>We got your info! Check your email for a confirmation. We'll reach out within 24 hours to schedule your drop-off or pickup.</p>
+        <p>We got your info! We'll reach out within 24 hours to schedule your drop-off or pickup. Questions? Email us at <a href="mailto:adascloset@thesauhub.com" style="color:var(--blue);font-weight:600">adascloset@thesauhub.com</a></p>
         <div class="btn-outline-green" onclick="go('home')">Back to Home</div>
       </div>
     </div>
@@ -746,6 +748,7 @@
     <div class="footer-right">
       <p class="footer-tagline">Turn your closet into cash.</p>
       <p class="footer-copy">Student-run · Spring Arbor University<br>Spring Arbor &amp; Jackson, MI</p>
+      <a href="mailto:adascloset@thesauhub.com" class="footer-email">adascloset@thesauhub.com</a>
     </div>
     <div class="footer-divider"></div>
     <div class="footer-bottom">
