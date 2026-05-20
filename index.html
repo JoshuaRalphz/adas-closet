@@ -676,8 +676,8 @@
         <div class="field"><label>Phone number *</label><input type="tel" id="phone" placeholder="(517) 000-0000"/></div>
         <div class="field"><label>Email address *</label><input type="email" id="email" placeholder="you@email.com"/></div>
         <p class="field-label-group">Your items</p>
-        <div class="field"><label>What are you bringing?</label><textarea id="items" placeholder="e.g. 1 bag of women's clothes, a few pairs of shoes..."></textarea></div>
-        <div class="field"><label>Rough item count</label><select id="itemCount"><option value="">Select a range</option><option>1–5 items</option><option>6–15 items</option><option>16–30 items</option><option>30+ items</option></select></div>
+        <div class="field"><label>What are you bringing? *</label><textarea id="items" placeholder="e.g. 1 bag of women's clothes, a few pairs of shoes..."></textarea></div>
+        <div class="field"><label>Rough item count *</label><select id="itemCount"><option value="">Select a range</option><option>1–5 items</option><option>6–15 items</option><option>16–30 items</option><option>30+ items</option></select></div>
         <p class="field-label-group">Hand-off preference</p>
         <div class="opt-group" id="grp-handoff">
           <div class="opt-btn" onclick="pick(this,'grp-handoff');showModal('modal-dropoff')">Drop off at SAU</div>
@@ -869,16 +869,22 @@
     const ln=document.getElementById('lastName').value.trim();
     const ph=document.getElementById('phone').value.trim();
     const em=document.getElementById('email').value.trim();
+    const items=document.getElementById('items').value.trim();
+    const itemCount=document.getElementById('itemCount').value;
+    const handoff=getSelected('grp-handoff');
+    const payout=getSelected('grp-payout');
     if (!fn||!ln||!ph||!em){alert('Please fill in your name, phone, and email.');return;}
+    if (!items){alert('Please describe what items you\'re bringing.');return;}
+    if (!itemCount){alert('Please select a rough item count.');return;}
+    if (!handoff){alert('Please select a hand-off preference (drop off or pickup).');return;}
+    if (!payout){alert('Please select a payout preference (Venmo or CashApp).');return;}
     if (!document.getElementById('agree').checked){alert('Please agree to the consignment terms.');return;}
     document.getElementById('form-box').style.display='none';
     const sb=document.getElementById('success-box'); sb.style.display='block'; sb.classList.add('show');
     setTimeout(spawnConfetti,200);
     fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({firstName:fn,lastName:ln,phone:ph,email:em,
-        items:document.getElementById('items').value.trim(),
-        itemCount:document.getElementById('itemCount').value,
-        handoff:getSelected('grp-handoff'),payout:getSelected('grp-payout')})
+        items:items,itemCount:itemCount,handoff:handoff,payout:payout})
     }).catch(()=>{});
   }
 
