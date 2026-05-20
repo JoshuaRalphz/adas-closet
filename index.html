@@ -422,6 +422,25 @@
       [data-reveal]{opacity:1;transform:none}
     }
 
+    /* ── HANDLE MODAL ── */
+    .handle-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:2100;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s ease}
+    .handle-overlay.open{opacity:1;pointer-events:all}
+    .handle-box{background:white;border-radius:20px;padding:28px 24px 24px;max-width:320px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.18);transform:scale(.95) translateY(8px);transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
+    .handle-overlay.open .handle-box{transform:none}
+    .handle-app-icon{font-size:32px;margin-bottom:8px}
+    .handle-title{font-size:17px;font-weight:700;color:#2A4A3E;margin-bottom:4px}
+    .handle-sub{font-size:13px;color:#888;margin-bottom:18px;line-height:1.4}
+    .handle-input-wrap{display:flex;align-items:center;background:#FAF3E8;border:1.5px solid rgba(42,74,62,0.2);border-radius:12px;padding:0 14px;margin-bottom:16px;transition:border .2s}
+    .handle-input-wrap:focus-within{border-color:#2A4A3E}
+    .handle-at{font-size:16px;color:#2A4A3E;font-weight:600;margin-right:4px}
+    .handle-input{border:none;background:transparent;font-size:15px;padding:13px 0;outline:none;width:100%;font-family:'DM Sans',sans-serif;color:#2D2318}
+    .handle-save{background:#2A4A3E;color:white;border:none;border-radius:12px;padding:13px;font-size:15px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;width:100%;margin-bottom:8px}
+    .handle-save:hover{background:#1e3830}
+    .handle-skip{font-size:12px;color:#aaa;cursor:pointer;text-decoration:underline}
+    .handle-badge{display:none;align-items:center;gap:6px;background:#E8F0EE;border-radius:10px;padding:8px 12px;margin-top:10px;font-size:13px;color:#2A4A3E;font-weight:600}
+    .handle-badge.show{display:flex}
+    .handle-badge-edit{margin-left:auto;font-size:11px;color:#888;cursor:pointer;font-weight:400;text-decoration:underline}
+
     /* ── ALERT MODAL ── */
     .alert-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s ease}
     .alert-overlay.open{opacity:1;pointer-events:all}
@@ -695,13 +714,12 @@
         </div>
         <p class="field-label-group">Payout preference</p>
         <div class="opt-group" id="grp-payout">
-          <div class="opt-btn" onclick="pick(this,'grp-payout')">Venmo</div>
-          <div class="opt-btn" onclick="pick(this,'grp-payout')">CashApp</div>
+          <div class="opt-btn" onclick="pick(this,'grp-payout');showHandleModal(this.textContent.trim())">Venmo</div>
+          <div class="opt-btn" onclick="pick(this,'grp-payout');showHandleModal(this.textContent.trim())">CashApp</div>
         </div>
-        <label class="field-label" for="payoutHandle">Your Venmo or CashApp username</label>
-        <div style="position:relative">
-          <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#888;font-size:15px;pointer-events:none">@</span>
-          <input class="form-input" id="payoutHandle" type="text" placeholder="yourhandle" style="padding-left:28px" required/>
+        <div class="handle-badge" id="handle-badge">
+          <span id="handle-badge-text"></span>
+          <span class="handle-badge-edit" onclick="showHandleModal(getSelected('grp-payout'))">edit</span>
         </div>
         <div class="agree-row">
           <input type="checkbox" id="agree" checked/>
@@ -953,7 +971,7 @@
     const itemCount=document.getElementById('itemCount').value;
     const handoff=getSelected('grp-handoff');
     const payout=getSelected('grp-payout');
-    const payoutHandle=document.getElementById('payoutHandle').value.trim().replace(/^@/,'');
+    const payoutHandle=payoutHandleValue;
     if (!fn||!ln||!ph||!em){showAlert('Please fill in your name, phone, and email.');return;}
     if (!items){showAlert('Please describe what items you\'re bringing.');return;}
     if (!itemCount){showAlert('Please select a rough item count.');return;}
@@ -1009,7 +1027,51 @@
   function closeAlert() {
     document.getElementById('alert-overlay').classList.remove('open');
   }
+
+  /* Handle modal */
+  let payoutHandleValue = '';
+  let _currentApp = '';
+  function showHandleModal(app) {
+    _currentApp = app || getSelected('grp-payout');
+    const icons = {Venmo:'💸', CashApp:'💚'};
+    document.getElementById('handle-modal-icon').textContent = icons[_currentApp] || '💰';
+    document.getElementById('handle-modal-title').textContent = 'Your ' + _currentApp + ' handle';
+    document.getElementById('handle-modal-input').value = payoutHandleValue;
+    document.getElementById('handle-overlay').classList.add('open');
+    setTimeout(() => document.getElementById('handle-modal-input').focus(), 200);
+  }
+  function saveHandle() {
+    const val = document.getElementById('handle-modal-input').value.trim().replace(/^@/,'');
+    if (!val) { document.getElementById('handle-modal-input').style.borderColor='red'; return; }
+    payoutHandleValue = val;
+    document.getElementById('handle-badge-text').textContent = '@' + val + ' · ' + _currentApp;
+    document.getElementById('handle-badge').classList.add('show');
+    document.getElementById('handle-overlay').classList.remove('open');
+  }
+  function skipHandle() {
+    payoutHandleValue = '';
+    document.getElementById('handle-badge').classList.remove('show');
+    document.getElementById('handle-overlay').classList.remove('open');
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && document.getElementById('handle-overlay').classList.contains('open')) saveHandle();
+  });
 </script>
+
+<!-- HANDLE MODAL -->
+<div class="handle-overlay" id="handle-overlay" onclick="skipHandle()">
+  <div class="handle-box" onclick="event.stopPropagation()">
+    <div class="handle-app-icon" id="handle-modal-icon">💸</div>
+    <p class="handle-title" id="handle-modal-title">Your Venmo handle</p>
+    <p class="handle-sub">We'll send your 70% cut here when your items sell.</p>
+    <div class="handle-input-wrap">
+      <span class="handle-at">@</span>
+      <input class="handle-input" id="handle-modal-input" type="text" placeholder="yourhandle" autocomplete="off"/>
+    </div>
+    <button class="handle-save" onclick="saveHandle()">Save</button>
+    <div class="handle-skip" onclick="skipHandle()">Skip for now</div>
+  </div>
+</div>
 
 <!-- ALERT MODAL -->
 <div class="alert-overlay" id="alert-overlay" onclick="closeAlert()">
