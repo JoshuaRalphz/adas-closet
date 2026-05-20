@@ -422,6 +422,16 @@
       [data-reveal]{opacity:1;transform:none}
     }
 
+    /* ── ALERT MODAL ── */
+    .alert-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s ease}
+    .alert-overlay.open{opacity:1;pointer-events:all}
+    .alert-box{background:white;border-radius:20px;padding:32px 28px 24px;max-width:340px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.18);transform:scale(.95) translateY(8px);transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
+    .alert-overlay.open .alert-box{transform:none}
+    .alert-icon{font-size:36px;margin-bottom:12px}
+    .alert-msg{font-size:15px;color:#2D2318;font-weight:500;margin-bottom:20px;line-height:1.5}
+    .alert-ok{background:#2A4A3E;color:white;border:none;border-radius:12px;padding:12px 32px;font-size:15px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;width:100%}
+    .alert-ok:hover{background:#1e3830}
+
     /* ── MODALS ── */
     .info-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s ease}
     .info-modal-overlay.open{opacity:1;pointer-events:all}
@@ -938,12 +948,12 @@
     const itemCount=document.getElementById('itemCount').value;
     const handoff=getSelected('grp-handoff');
     const payout=getSelected('grp-payout');
-    if (!fn||!ln||!ph||!em){alert('Please fill in your name, phone, and email.');return;}
-    if (!items){alert('Please describe what items you\'re bringing.');return;}
-    if (!itemCount){alert('Please select a rough item count.');return;}
-    if (!handoff){alert('Please select a hand-off preference (drop off or pickup).');return;}
-    if (!payout){alert('Please select a payout preference (Venmo or CashApp).');return;}
-    if (!document.getElementById('agree').checked){alert('Please agree to the consignment terms.');return;}
+    if (!fn||!ln||!ph||!em){showAlert('Please fill in your name, phone, and email.');return;}
+    if (!items){showAlert('Please describe what items you\'re bringing.');return;}
+    if (!itemCount){showAlert('Please select a rough item count.');return;}
+    if (!handoff){showAlert('Please select a hand-off preference (drop off or pickup).');return;}
+    if (!payout){showAlert('Please select a payout preference (Venmo or CashApp).');return;}
+    if (!document.getElementById('agree').checked){showAlert('Please agree to the consignment terms.');return;}
     document.getElementById('form-box').style.display='none';
     const sb=document.getElementById('success-box'); sb.style.display='block'; sb.classList.add('show');
     if (weekIsFull) {
@@ -967,7 +977,7 @@
     const fn=document.getElementById('ci-firstName').value.trim();
     const ln=document.getElementById('ci-lastName').value.trim();
     const ph=document.getElementById('ci-phone').value.trim();
-    if(!fn||!ln||!ph){alert('Please fill in your name and phone number.');return;}
+    if(!fn||!ln||!ph){showAlert('Please fill in your name and phone number.');return;}
     document.getElementById('ci-step2').style.display='none';
     const s=document.getElementById('ci-success'); s.style.display='block'; s.classList.add('show');
     setTimeout(spawnConfetti,200);
@@ -985,6 +995,22 @@
     r.style.cssText=`position:absolute;width:${sz}px;height:${sz}px;border-radius:50%;background:rgba(255,255,255,.28);transform:scale(0);left:${e.clientX-rect.left-sz/2}px;top:${e.clientY-rect.top-sz/2}px;animation:ripple .5s ease-out forwards;pointer-events:none;`;
     btn.appendChild(r); setTimeout(()=>r.remove(),600);
   });
+  function showAlert(msg) {
+    document.getElementById('alert-msg').textContent = msg;
+    document.getElementById('alert-overlay').classList.add('open');
+  }
+  function closeAlert() {
+    document.getElementById('alert-overlay').classList.remove('open');
+  }
 </script>
+
+<!-- ALERT MODAL -->
+<div class="alert-overlay" id="alert-overlay" onclick="closeAlert()">
+  <div class="alert-box" onclick="event.stopPropagation()">
+    <div class="alert-icon">⚠️</div>
+    <p class="alert-msg" id="alert-msg"></p>
+    <button class="alert-ok" onclick="closeAlert()">Got it</button>
+  </div>
+</div>
 </body>
 </html>
