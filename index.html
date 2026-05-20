@@ -646,7 +646,7 @@
     <div class="terms-inner">
       <div class="terms-card" data-reveal="scale">
         <p class="section-label">Consignment Terms</p>
-        <div class="term-row"><span class="term-key">Your cut of every sale</span><span class="term-val gold">≥ 30% of the final sale price</span></div>
+        <div class="term-row"><span class="term-key">Your cut of every sale</span><span class="term-val gold">70% of the final sale price</span></div>
         <div class="term-row"><span class="term-key">Payout method</span><span class="term-val">Venmo or CashApp</span></div>
         <div class="term-row"><span class="term-key">Drop-off location</span><span class="term-val">Ada's at SAU, Spring Arbor</span></div>
         <div class="term-row"><span class="term-key">Pickup option</span><span class="term-val">Available — small fee applies</span></div>
@@ -846,7 +846,7 @@
 </footer>
 
 <script>
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw5tBLwjDNl8PxNBDdYPOgf-Vq5spy5cmZowiUkm4qtZz-TqXSLmBehsaR6uPjctw0vrQ/exec';
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxKmdpp-kxgZuXw35LhiDmQvQe4A-G9DlqJeutt4K5wDDhHIQENzZiyuDqu3fkZVlzn6w/exec';
 
   /* Maps */
   const SAU = [42.2016, -84.5543];
@@ -1059,7 +1059,7 @@
 </script>
 
 <!-- HANDLE MODAL -->
-<div class="handle-overlay" id="handle-overlay" onclick="skipHandle()">
+<div class="handle-overlay" id="handle-overlay">
   <div class="handle-box" onclick="event.stopPropagation()">
     <div class="handle-app-icon" id="handle-modal-icon">💸</div>
     <p class="handle-title" id="handle-modal-title">Your Venmo handle</p>
@@ -1069,7 +1069,6 @@
       <input class="handle-input" id="handle-modal-input" type="text" placeholder="yourhandle" autocomplete="off"/>
     </div>
     <button class="handle-save" onclick="saveHandle()">Save</button>
-    <div class="handle-skip" onclick="skipHandle()">Skip for now</div>
   </div>
 </div>
 
